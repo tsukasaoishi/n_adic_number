@@ -25,26 +25,23 @@ module NAdicNumber
 
       case seed
       when Fixnum
-        initialize_by_fixnum(seed)
+        raise ArgumentError if seed < 0
+        @integer = seed
       when String
-        initialize_by_string(seed)
+        @str_chars = seed.reverse.chars
+        raise ArgumentError if @str_chars.one?{|ch| !reverse_map.has_key?(ch)}
+        @string = seed
       else
         raise ArgumentError
       end
     end
 
     def to_s
-      @string ||= @raw_data.reverse.join
+      @string ||= make_string
     end
 
     def to_i
-      return @integer if @integer
-
-      @integer = 0
-      @raw_data.each_with_index do |ch, index|
-        @integer += reverse_map[ch] * keta(index)
-      end
-      @integer
+      @integer ||= make_integer
     end
 
     %w|+ - * /|.each do |op|
@@ -60,29 +57,26 @@ module NAdicNumber
 
     private
 
-    def initialize_by_fixnum(int)
-      raise ArgumentError if int < 0
-
-      @integer = int
-      @string = nil
-
-      if int == 0
-        @raw_data = [map_table.first]
+    def make_string
+      if @integer == 0
+        map_table.first.dup
       else
-        @raw_data = []
-        work = int
+        string = ""
+        work = @integer
         while work != 0
           work, num = work.divmod(base_num)
-          @raw_data << map_table[num]
+          string << map_table[num]
         end
+        string.reverse
       end
     end
 
-    def initialize_by_string(str)
-      raise ArgumentError if str.chars.one?{|ch| !reverse_map.has_key?(ch)}
-      @string = str
-      @integer = nil
-      @raw_data = str.reverse.chars
+    def make_integer
+      integer = 0
+      @str_chars.each_with_index do |ch, index|
+        integer += reverse_map[ch] * keta(index)
+      end
+      integer
     end
 
     def base_num
