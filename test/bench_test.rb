@@ -4,15 +4,6 @@ require File.expand_path('../../lib/n_adic_number/base.rb', __FILE__)
 N = NAdicNumber::Base
 N.mapping ["0".."9", "a".."z"].map{|r| r.to_a}.flatten
 
-class NumberOfBase62 < NAdicNumber::Base
-    mapping ["0".."9", "A".."Z", "a".."z"].map{|r| r.to_a}.flatten
-end
-
-a = NumberOfBase62.new("aaaaa")
-p a.to_i
-p a.to_s
-
-
 TEST_COUNT = 100000
 sample_list = []
 TEST_COUNT.times{|n| sample_list << n.to_s(36)}
