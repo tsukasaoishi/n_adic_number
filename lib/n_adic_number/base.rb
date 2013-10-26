@@ -30,13 +30,13 @@ module NAdicNumber
     end
 
     def to_s
-      @raw_data.reverse
+      @raw_data.reverse.join
     end
 
     def to_i
       ret = 0
-      @raw_data.chars.each_with_index do |ch, index|
-        ret += reverse_map[ch] * (keta[index] || (base_num ** i))
+      @raw_data.each_with_index do |ch, index|
+        ret += reverse_map[ch] * keta(index)
       end
       ret
     end
@@ -58,9 +58,9 @@ module NAdicNumber
       raise ArgumentError if int < 0
 
       if int == 0
-        @raw_data = map_table.first
+        @raw_data = [map_table.first]
       else
-        @raw_data = ""
+        @raw_data = []
         work = int
         while work != 0
           work, num = work.divmod(base_num)
@@ -70,18 +70,24 @@ module NAdicNumber
     end
 
     def initialize_by_string(str)
-      raise ArgumentError unless str.split(//).all?{|s| map_table.include?(s)}
-      @raw_data = str.reverse
+      raise ArgumentError unless str.chars.all?{|s| map_table.include?(s)}
+      @raw_data = str.reverse.chars
+    end
+
+    def keta(pos)
+      self.class.keta[pos] ||= self.class.base_num ** pos
     end
 
     def map_table
       self.class.map_list
     end
 
-    %w|base_num keta reverse_map|.each do |variable_name|
-      define_method(variable_name) do
-        self.class.__send__(variable_name)
-      end
+    def base_num
+      self.class.base_num
+    end
+
+    def reverse_map
+      self.class.reverse_map
     end
   end
 end

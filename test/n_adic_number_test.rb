@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require_relative './test_helper'
 
 class TestNAdicNumner < MiniTest::Unit::TestCase
@@ -5,12 +7,13 @@ class TestNAdicNumner < MiniTest::Unit::TestCase
 
   def setup
     @map_table = ["0".."9", "A".."Z", "a".."z"].map{|r| r.to_a}.flatten
+    #@map_table = ("あ".."ん").to_a
     N.map_table @map_table
   end
 
   def test_zero
     assert_equal N.new(0).to_s, @map_table.first
-    assert_equal N.new("0").to_i, 0
+    assert_equal N.new(@map_table.first).to_i, 0
   end
 
   def test_last
