@@ -6,7 +6,7 @@ module NAdicNumber
       def mapping(ary)
         raise ArgumentError, "map_table is not Array" unless ary.is_a?(Array)
         raise ArgumentError, "map_table is empty" if ary.empty?
-        raise ArgementError, "map_table is not unique" if ary.uniq!
+        raise ArgumentError, "map_table is not unique" if ary.uniq!
 
         @map_table = ary
         @base_num = ary.size
