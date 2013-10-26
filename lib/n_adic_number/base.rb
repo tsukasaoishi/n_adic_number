@@ -1,34 +1,23 @@
 module NAdicNumber
   class Base
     class << self
-      attr_reader :config
+      attr_reader :map_list, :base_num, :keta, :reverse_map
 
       def map_table(ary)
         raise ArgumentError, "map_table is not Array" unless ary.is_a?(Array)
         raise ArgumentError, "map_table is empty" if ary.empty?
         raise ArgementError, "map_table is not unique" if ary.uniq!
 
-        base_num = ary.size
-        reverse_map = {}
-        ary.each_with_index{|ch,i| reverse_map[ch] = i}
-
-        @config = {
-          :map_table => ary,
-          :base_num => base_num,
-          :keta => (0..9).map{|i| base_num ** i},
-          :reverse_map => reverse_map
-        }
+        @map_list = ary
+        @base_num = ary.size
+        @reverse_map = {}
+        ary.each_with_index{|ch,i| @reverse_map[ch] = i}
+        @keta = (0..9).map{|i| @base_num ** i}
       end
     end
 
-    attr_reader :map_table, :base_num, :keta, :reverse_map
-
     def initialize(seed)
-      raise "Not define map_table" unless self.class.config
-
-      %w|map_table base_num keta reverse_map|.each do |variable_name|
-        instance_variable_set("@#{variable_name}", self.class.config[variable_name.to_sym])
-      end
+      raise "Not define map_table" unless self.class.map_list
 
       case seed
       when Fixnum
@@ -83,6 +72,16 @@ module NAdicNumber
     def initialize_by_string(str)
       raise ArgumentError unless str.split(//).all?{|s| map_table.include?(s)}
       @raw_data = str.reverse
+    end
+
+    def map_table
+      self.class.map_list
+    end
+
+    %w|base_num keta reverse_map|.each do |variable_name|
+      define_method(variable_name) do
+        self.class.__send__(variable_name)
+      end
     end
   end
 end
