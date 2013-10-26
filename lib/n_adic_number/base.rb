@@ -13,6 +13,7 @@ module NAdicNumber
         @reverse_map = {}
         ary.each_with_index{|ch,i| @reverse_map[ch] = i}
         @keta = (0..9).map{|i| @base_num ** i}
+        nil
       end
 
       def keta(pos)
