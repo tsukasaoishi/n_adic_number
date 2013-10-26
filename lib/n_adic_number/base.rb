@@ -1,7 +1,7 @@
 module NAdicNumber
   class Base
     class << self
-      attr_reader :map_list, :base_num, :keta, :reverse_map
+      attr_reader :base_num, :map_list, :reverse_map
 
       def map_table(ary)
         raise ArgumentError, "map_table is not Array" unless ary.is_a?(Array)
@@ -14,10 +14,14 @@ module NAdicNumber
         ary.each_with_index{|ch,i| @reverse_map[ch] = i}
         @keta = (0..9).map{|i| @base_num ** i}
       end
+
+      def keta(pos)
+        @keta[pos] ||= @base_num ** pos
+      end
     end
 
     def initialize(seed)
-      raise "Not define map_table" unless self.class.map_list
+      raise "Not define map_table" unless base_num
 
       case seed
       when Fixnum
@@ -74,16 +78,16 @@ module NAdicNumber
       @raw_data = str.reverse.chars
     end
 
+    def base_num
+      self.class.base_num
+    end
+
     def keta(pos)
-      self.class.keta[pos] ||= self.class.base_num ** pos
+      self.class.keta(pos)
     end
 
     def map_table
       self.class.map_list
-    end
-
-    def base_num
-      self.class.base_num
     end
 
     def reverse_map
