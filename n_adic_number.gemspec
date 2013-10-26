@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = NAdicNumber::VERSION
   spec.authors       = ["tsukasaoishi"]
   spec.email         = ["tsukasa.oishi@gmail.com"]
-  spec.description   = %q{NAdicNumber treats N-adic Number}
+  spec.description   = %q{https://github.com/tsukasaoishi/n_adic_number}
   spec.summary       = %q{NAdicNumber treats N-adic Number}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/tsukasaoishi/n_adic_number"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
