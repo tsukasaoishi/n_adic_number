@@ -8,7 +8,7 @@ class TestNAdicNumner < MiniTest::Unit::TestCase
   def setup
     @map_table = ["0".."9", "A".."Z", "a".."z"].map{|r| r.to_a}.flatten
     #@map_table = ("あ".."ん").to_a
-    N.map_table @map_table
+    N.mapping @map_table
   end
 
   def test_zero

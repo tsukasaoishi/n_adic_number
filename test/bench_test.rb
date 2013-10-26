@@ -2,7 +2,7 @@ require 'benchmark'
 require File.expand_path('../../lib/n_adic_number/base.rb', __FILE__)
 
 N = NAdicNumber::Base
-N.map_table ["0".."9", "A".."Z", "a".."z"].map{|r| r.to_a}.flatten
+N.mapping ["0".."9", "a".."z"].map{|r| r.to_a}.flatten
 
 TEST_COUNT = 100000
 list = []

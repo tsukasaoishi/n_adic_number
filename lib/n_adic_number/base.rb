@@ -1,14 +1,14 @@
 module NAdicNumber
   class Base
     class << self
-      attr_reader :base_num, :map_list, :reverse_map
+      attr_reader :base_num, :map_table, :reverse_map
 
-      def map_table(ary)
+      def mapping(ary)
         raise ArgumentError, "map_table is not Array" unless ary.is_a?(Array)
         raise ArgumentError, "map_table is empty" if ary.empty?
         raise ArgementError, "map_table is not unique" if ary.uniq!
 
-        @map_list = ary
+        @map_table = ary
         @base_num = ary.size
         @reverse_map = {}
         ary.each_with_index{|ch,i| @reverse_map[ch] = i}
@@ -87,7 +87,7 @@ module NAdicNumber
     end
 
     def map_table
-      self.class.map_list
+      self.class.map_table
     end
 
     def reverse_map
