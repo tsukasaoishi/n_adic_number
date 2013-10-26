@@ -34,15 +34,17 @@ module NAdicNumber
     end
 
     def to_s
-      @raw_data.reverse.join
+      @string ||= @raw_data.reverse.join
     end
 
     def to_i
-      ret = 0
+      return @integer if @integer
+
+      @integer = 0
       @raw_data.each_with_index do |ch, index|
-        ret += reverse_map[ch] * keta(index)
+        @integer += reverse_map[ch] * keta(index)
       end
-      ret
+      @integer
     end
 
     %w|+ - * /|.each do |op|
@@ -61,6 +63,9 @@ module NAdicNumber
     def initialize_by_fixnum(int)
       raise ArgumentError if int < 0
 
+      @integer = int
+      @string = nil
+
       if int == 0
         @raw_data = [map_table.first]
       else
@@ -74,7 +79,9 @@ module NAdicNumber
     end
 
     def initialize_by_string(str)
-      raise ArgumentError unless str.chars.all?{|s| map_table.include?(s)}
+      raise ArgumentError if str.chars.one?{|ch| !reverse_map.has_key?(ch)}
+      @string = str
+      @integer = nil
       @raw_data = str.reverse.chars
     end
 
