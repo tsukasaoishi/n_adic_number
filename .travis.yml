@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - ree
+  - 1.8.7
+  - 1.9.3
+  - 2.0.0
+  - 2.1.2
+script:
+  - "bundle exec ruby test/n_adic_number_test.rb"
+notifications:
+  emails:
+    - tsukasa.oishi@gmail.com
