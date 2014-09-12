@@ -1,5 +1,7 @@
 # NAdicNumber
 
+[![Gem Version](https://badge.fury.io/rb/n_adic_number.svg)](http://badge.fury.io/rb/n_adic_number) [![Build Status](https://travis-ci.org/tsukasaoishi/n_adic_number.svg?branch=master)](https://travis-ci.org/tsukasaoishi/n_adic_number) [![Code Climate](https://codeclimate.com/github/tsukasaoishi/n_adic_number/badges/gpa.svg)](https://codeclimate.com/github/tsukasaoishi/n_adic_number)
+
 NAdicNumber treats N-adic Number.
 
 ## Installation
