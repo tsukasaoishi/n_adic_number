@@ -25,7 +25,7 @@ module NAdicNumber
       raise "Not define map_table" unless base_num
 
       case seed
-      when Fixnum
+      when Integer
         raise ArgumentError if seed < 0
         @integer = seed
       when String
